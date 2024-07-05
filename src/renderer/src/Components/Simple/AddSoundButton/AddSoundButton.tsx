@@ -1,18 +1,21 @@
 import AddIcon from "@mui/icons-material/Add";
 import { IconButton } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-export default function AddSoundButton() {
+interface AddSoundButtonProps {
+  setSelectedFile: (newState: File | null) => void;
+}
+
+export default function AddSoundButton({
+  setSelectedFile,
+}: AddSoundButtonProps) {
   const uploadRef = useRef<HTMLInputElement>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const onAddBtnClick = () => {
     if (uploadRef.current) {
       uploadRef.current.click();
     }
   };
-
-  console.log(selectedFile);
 
   const onFileSelected = () => {
     if (!uploadRef.current) return;

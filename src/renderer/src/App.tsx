@@ -4,6 +4,8 @@ import { CssBaseline, Theme, ThemeProvider, createTheme } from "@mui/material";
 import TopAppBar from "./Components/Complex/TopAppBar/TopAppBar";
 import useAppStates from "./Stores/appStore";
 import { useMemo } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const darkTheme = createTheme({
   palette: {
@@ -28,16 +30,20 @@ function App() {
   }, [theme]);
 
   return (
-    <ThemeProvider theme={currentTheme}>
-      <TopAppBar />
-      <CssBaseline />
+    <>
+      <ThemeProvider theme={currentTheme}>
+        <TopAppBar />
+        <CssBaseline />
 
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </HashRouter>
-    </ThemeProvider>
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        </HashRouter>
+      </ThemeProvider>
+
+      <ToastContainer />
+    </>
   );
 }
 

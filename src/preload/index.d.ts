@@ -5,11 +5,4 @@ declare global {
     electron: ElectronAPI;
     api: unknown;
   }
-
-  interface AudioMetaData {
-    id: string;
-    audioPath: string;
-    imagePath: string;
-    name: string;
-  }
 }

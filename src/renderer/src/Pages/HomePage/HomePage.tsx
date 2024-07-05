@@ -1,10 +1,9 @@
-import { Box, Typography } from "@mui/material";
-import AddSoundButton from "@renderer/Components/Simple/AddSoundButton/AddSoundButton";
+import SoundsDashboard from "@renderer/Components/Complex/SoundsDashboard/SoundsDashboard";
 
 export default function HomePage() {
   return (
     <div>
-      <AddSoundButton />
+      <SoundsDashboard />
     </div>
   );
 }
