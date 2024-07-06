@@ -4,7 +4,7 @@ import path from "path";
 export const getImageMetaData = (
   _: unknown,
   imagePath: string,
-): SoundboardImageData | null => {
+): NewSoundSample["image"] | null => {
   if (!fs.existsSync(imagePath) || !fs.statSync(imagePath).isFile()) {
     return null;
   }

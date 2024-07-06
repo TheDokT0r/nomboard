@@ -3,7 +3,6 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import {
   AppBar,
   Box,
-  Button,
   IconButton,
   Toolbar,
   Typography,

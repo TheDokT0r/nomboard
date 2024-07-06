@@ -1,5 +1,3 @@
-import React from "react";
-
-export default function SoundWidget({}: AudioMetaData) {
+export default function SoundWidget({}: NewSoundSample) {
   return <div>SoundWidget</div>;
 }

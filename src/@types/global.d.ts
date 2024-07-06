@@ -1,15 +1,14 @@
 declare global {
-  interface SoundboardImageData {
-    imageType: string;
-    imagePath: string;
-    base64: string;
-  }
-
-  interface AudioMetaData {
-    id: string;
+  interface NewSoundSample {
     audioPath: string;
-    image: SoundboardImageData;
+    image: {
+      id?: string;
+      imageType: string;
+      imagePath: string;
+      base64: string;
+    } | null;
     name: string;
+    creationDate: Date;
   }
 }
 

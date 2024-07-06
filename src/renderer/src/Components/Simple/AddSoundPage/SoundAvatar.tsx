@@ -4,11 +4,16 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { toast } from "react-toastify";
 
 interface SoundAvatarProps {
-  image: SoundboardImageData | null;
-  setImage: (newState: SoundboardImageData | null) => void;
+  image: NewSoundSample["image"];
+  setImage: (newState: NewSoundSample["image"]) => void;
+  size?: string | number;
 }
 
-export default function SoundAvatar({ image, setImage }: SoundAvatarProps) {
+export default function SoundAvatar({
+  image,
+  setImage,
+  size,
+}: SoundAvatarProps) {
   const imageUploadRef = useRef<HTMLInputElement>(null);
 
   const addImageBtnClick = (
@@ -27,7 +32,7 @@ export default function SoundAvatar({ image, setImage }: SoundAvatarProps) {
     const { files } = imageUploadRef.current;
 
     if (files && files.length !== 0) {
-      const imageData: SoundboardImageData | null =
+      const imageData: NewSoundSample["image"] | null =
         await window.electron.ipcRenderer.invoke("getImageData", files[0].path);
 
       if (!imageData) {
@@ -56,9 +61,9 @@ export default function SoundAvatar({ image, setImage }: SoundAvatarProps) {
     <>
       <IconButton onClick={addImageBtnClick}>
         {image ? (
-          <Avatar src={image.base64} />
+          <Avatar src={image.base64} sx={{ width: size, height: size }} />
         ) : (
-          <Avatar>
+          <Avatar sx={{ width: size, height: size }}>
             <CameraAltIcon />
           </Avatar>
         )}

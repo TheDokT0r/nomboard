@@ -3,9 +3,16 @@ import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 import { getImageMetaData } from "./server-hooks/imageHelper";
+import { addAudioToSoundboard } from "./server-hooks/soundBoardHandler";
+import fs from "fs";
+import { DATA_FOLDER, DB_PATH } from "./consts";
 
 function createWindow(): void {
   // Create the browser window.
+  if (!fs.existsSync(DATA_FOLDER)) {
+    fs.mkdirSync(DB_PATH, { recursive: true });
+  }
+
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -54,6 +61,8 @@ app.whenReady().then(() => {
   ipcMain.on("ping", () => console.log("pong"));
 
   ipcMain.handle("getImageData", getImageMetaData);
+
+  ipcMain.handle("addAudioToSoundboard", addAudioToSoundboard);
 
   createWindow();
 
