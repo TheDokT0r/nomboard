@@ -3,7 +3,10 @@ import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 import { getImageMetaData } from "./server-hooks/imageHelper";
-import { addAudioToSoundboard } from "./server-hooks/soundBoardHandler";
+import {
+  addAudioToSoundboard,
+  getSoundboard,
+} from "./server-hooks/soundBoardHandler";
 import fs from "fs";
 import { DATA_FOLDER, DB_PATH } from "./consts";
 
@@ -63,6 +66,8 @@ app.whenReady().then(() => {
   ipcMain.handle("getImageData", getImageMetaData);
 
   ipcMain.handle("addAudioToSoundboard", addAudioToSoundboard);
+
+  ipcMain.handle("getSoundboard", getSoundboard);
 
   createWindow();
 

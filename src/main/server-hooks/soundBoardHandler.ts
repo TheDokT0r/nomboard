@@ -1,18 +1,30 @@
 import fs from "fs-extra";
 import path from "path";
-import { IMAGES_FOLDER, SOUNDS_FOLDER } from "../consts";
 import { SoundSample } from "../sqlDefinitions";
-import { randomUUID } from "crypto";
+import { ASSETS_FOLDER } from "../consts";
 
 export const addAudioToSoundboard = async (
   _: unknown,
   audioMetaData: NewSoundSample,
 ) => {
-  const { audioPath, image, name, creationDate } = audioMetaData;
+  const { audioPath, image, name } = audioMetaData;
+
+  await SoundSample.sync();
+
+  const soundSample = await SoundSample.create({
+    filePath: path.basename(`audio${path.extname(audioPath)}`),
+    imagePath: image ? `cover${path.extname(image.imagePath)}` : null,
+    name,
+  });
+
+  const id: number = soundSample.dataValues.id;
+
+  const trackFolder = path.join(ASSETS_FOLDER, id.toString());
+  fs.mkdirsSync(trackFolder);
 
   const newAudioPath = path.join(
-    SOUNDS_FOLDER,
-    `${randomUUID()}${path.extname(audioPath)}`,
+    trackFolder,
+    `audio${path.extname(audioPath)}`,
   );
 
   fs.copySync(audioPath, newAudioPath);
@@ -20,24 +32,23 @@ export const addAudioToSoundboard = async (
   let newImagePath: string | null = null;
   if (image) {
     newImagePath = path.join(
-      IMAGES_FOLDER,
-      `${randomUUID()}${path.extname(image.imagePath)}`,
+      trackFolder,
+      `cover${path.extname(image.imagePath)}`,
     );
 
     fs.copySync(image.imagePath, newImagePath);
   }
+};
 
-  const getImagePath = () => {
-    if (!image) return null;
-    return path.basename(image.imagePath);
-  };
+interface DBCell {
+  id: string;
+  filePath: string;
+  imagePath: string;
+  name: string;
+  creationDate: string;
+}
 
-  const soundSample = await SoundSample.create({
-    filePath: path.basename(audioPath),
-
-    imagePath: newImagePath ? path.basename(newImagePath) : null,
-
-    name,
-    creationDate,
-  });
+export const getSoundboard = async (): Promise<DBCell[]> => {
+  const response: any = await SoundSample.findAll();
+  return response.dataValues;
 };
