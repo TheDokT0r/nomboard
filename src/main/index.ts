@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
-import { getImageMetaData } from "./server-hooks/imageHelper";
+import { getImageMetaData, imageToBase64 } from "./server-hooks/imageHelper";
 import {
   addAudioToSoundboard,
   getSoundboard,
@@ -68,6 +68,8 @@ app.whenReady().then(() => {
   ipcMain.handle("addAudioToSoundboard", addAudioToSoundboard);
 
   ipcMain.handle("getSoundboard", getSoundboard);
+
+  ipcMain.handle('imageToBase64', imageToBase64)
 
   createWindow();
 

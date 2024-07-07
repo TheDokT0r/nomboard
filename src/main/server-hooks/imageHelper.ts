@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { ASSETS_FOLDER } from "../consts";
 
 export const getImageMetaData = (
   _: unknown,
@@ -19,4 +20,20 @@ export const getImageMetaData = (
     imageType,
     base64,
   };
+};
+
+export const imageToBase64 = (
+  _: unknown,
+  soundId: string,
+  imageName: string,
+): string | null => {
+  const imagePath = path.join(ASSETS_FOLDER, soundId, imageName);
+
+  if (!fs.existsSync(imagePath)) {
+    return null;
+  }
+
+  const imageType = path.extname(imagePath.split(".")[0]);
+  const basicBase64 = fs.readFileSync(imagePath, "base64");
+  return `data:image/${imageType};base64, ${basicBase64}`;
 };

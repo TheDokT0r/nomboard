@@ -40,15 +40,7 @@ export const addAudioToSoundboard = async (
   }
 };
 
-interface DBCell {
-  id: string;
-  filePath: string;
-  imagePath: string;
-  name: string;
-  creationDate: string;
-}
-
-export const getSoundboard = async (): Promise<DBCell[]> => {
-  const response: any = await SoundSample.findAll();
-  return response.dataValues;
+export const getSoundboard = async (): Promise<SoundboardData[]> => {
+  const response = await SoundSample.findAll();
+  return response.map((value) => value.dataValues);
 };

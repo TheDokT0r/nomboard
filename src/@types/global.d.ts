@@ -10,6 +10,15 @@ declare global {
     name: string;
     creationDate: Date;
   }
+
+  interface SoundboardData {
+    id: string;
+    filePath: string;
+    imagePath: string;
+    name: string;
+    creationDate: Date;
+    updatedAt: Date;
+  }
 }
 
 export {};
